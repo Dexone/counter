@@ -1,13 +1,55 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+</head>
+
+<body>
+  <script type="module" src="/main.js"></script>
+
+
+  l1: <input type="number" value="56.65" id="l1"><br>
+  SRT: <input type="number" id="srt"><br>
+  Poez A: <input type="number" id="poeza"><br>
+  Doh: <input type="number" id="doh"><br>
+  <button onclick="pushElement()">go</button>
+
+  <div></div>
+
+  <script>
+    async function get() {
+      const response = await fetch("https://dexone.ru/backend_counter/data", {
+        method: "GET",
+      });
+      const info = await response.json()
+    }
+
+
+
+
+
+    async function pushElement() {
+      let l1 = document.getElementById("l1").value
+      let srt = document.getElementById("srt").value
+      let poeza = document.getElementById("poeza").value
+      let doh = document.getElementById("doh").value
+      let rachet = (Number(doh) - (Number(doh) / 100 * 1.8)) - ((Number(l1) * (Number(srt) / 100)) * Number(poeza))
+      const response = await fetch("https://dexone.ru/backend_counter/data", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify([Number(l1), Number(srt), Number(poeza), Number(doh), Number(rachet)]), // Тело 
+      });
+    }
+  </script>
+
+
+</body>
+
 </html>
